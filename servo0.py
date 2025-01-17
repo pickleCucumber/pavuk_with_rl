@@ -1,11 +1,14 @@
 from __future__ import division
 import time
+import subprocess
 import math
 from adafruit_servokit import ServoKit
 import mpu6050
 import numpy as np
 import gc
 import RPi.GPIO as GPIO
+import pygame
+
 
 #задаем адресс объектов
 #mpu6050 = mpu6050.mpu6050(0x68)
@@ -16,6 +19,8 @@ kit = ServoKit(channels=16)
 #GPIO.setmode(GPIO.BCM)
 #GPIO.setup(TRIG, GPIO.OUT)
 #```````````																																																																																																																																																																													GPIO.setup(ECHO, GPIO.IN)
+
+
 
 #читаем данные с mpu
 def read_sensor_data():
@@ -141,8 +146,8 @@ def StandUp() :
     Thighs(170)
     time.sleep(2)
 
-    Thighs(135) #lift up the body
-    Calfs(35)
+    Thighs(60) #lift up the body
+    Calfs(90)
 
 def Xposition():
     time.sleep(0.2)
@@ -225,7 +230,7 @@ def Forward():
 
     time.sleep(0.1)
     
-   
+
 
 #Walk Backward
 def Backward():
@@ -591,7 +596,53 @@ def C_B():
 #Remember!!! to comment the line below before you run the robot control code
 #SetUp()
 
+    
+def Forward():
+    
+    Calf_4(45)
+    Calf_1(45)
+     
+    Thigh_1(90) #lifts leg 1 and 3 up at the sametime
+    Thigh_3(90)
+    Joint_1(90) #Move joint 1 and 3 to the orignal position for the next move
+    Joint_3(90)
+    time.sleep(0.1)
+    Joint_2(120) #Move or "twist" joint 2 and 4 
+    Joint_4(60)
+    time.sleep(0.2)
+    Thigh_1(60) #drop leg 1 and 3  
+    Thigh_3(60)
+    Calf_4(90)
+    Calf_1(90)
+    time.sleep(0.1)
+    #Repeat the same steps but for the opposite legs
+    Thigh_2(90) #lifts leg 2 and 4 up at the sametime
+    Thigh_4(90)
+    Calf_2(45)
+    Calf_4(45)
+    Joint_2(90) #Move joint 2 and 4 to the orignal position for the next move
+    Joint_4(90)
+    time.sleep(0.1)
+    Joint_1(120) #Move or "twist" joint 1 and 3
+    Joint_3(60)
+    time.sleep(0.2)
+    Thigh_2(60) #drop leg 2 and 4
+    Thigh_4(60)
+    Calf_2(90)
+    Calf_4(90)
+    time.sleep(0.1)
 
+
+
+#time.sleep(1)
+#Sit()
+#3time.sleep(1)
+
+#Hi()
+#time.sleep(1)
+#StandUp()
+#time.sleep()
+#print(subprocess.run(input()))
 
 time.sleep(1)
 Sit()
@@ -607,7 +658,3 @@ time.sleep(5)
 for i in range(10):
     #Left()
     Forward()
-    #time.sleep(1)
-#Sit()
-#time.sleep(1)
-#Hi()
