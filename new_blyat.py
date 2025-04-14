@@ -6,7 +6,7 @@ from adafruit_servokit import ServoKit
 import mpu6050
 import numpy as np
 import smbus
-from flask import Flask, request
+from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
@@ -256,6 +256,44 @@ init_csv()
 log_data()
 time.sleep(1)
 
+
+HTML_PAGE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Robot Controller</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding-top: 50px; }
+        button {
+            font-size: 20px;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Управление роботом-собакой 🐾</h1>
+    {% for pose in poses %}
+        <form action="/pose" method="get">
+            <input type="hidden" name="name" value="{{ pose }}">
+            <button type="submit">{{ pose }}</button>
+        </form>
+    {% endfor %}
+</body>
+</html>
+"""
+
+@app.route('/')
+def home():
+    poses = ['lay', 'sit', 'stand', 'walk', 'heil', 'ready']
+    return render_template_string(HTML_PAGE, poses=poses)
+
 @app.route('/pose')
 def handle_pose():
     pose = request.args.get('name')
@@ -277,3 +315,4 @@ def handle_pose():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
+
