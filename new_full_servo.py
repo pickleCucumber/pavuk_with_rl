@@ -1,12 +1,15 @@
 from __future__ import division
 import time
+import csv
 import math
 from adafruit_servokit import ServoKit
-#import mpu6050
+import mpu6050
 import numpy as np
+import smbus
+
 
 #задаем адресс объектов
-##mpu6050 = mpu6050.mpu6050(0x68)
+mpu6050 = mpu6050.mpu6050(0x68)
 kit = ServoKit(channels=16)
 
 # объявляем сервомоторы
@@ -118,7 +121,7 @@ def radii(A):
 
 
 #инициализация сервомоторов для калибровки
-def SetUp():
+def Stay():
     print("Инициализация началась")    
 
     time.sleep(1)
@@ -178,8 +181,8 @@ def ready_for_game():
     Back_Right_radii(45)
 
 def log_data():
-    accel = sensor.get_accel_data()
-    gyro = sensor.get_gyro_data()
+    accel = mpu6050.get_accel_data()
+    gyro = mpu6050.get_gyro_data()
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
 
     row = [
@@ -191,14 +194,14 @@ def log_data():
         servo_angles['FR_rad'], servo_angles['FL_rad'], servo_angles['BL_rad'], servo_angles['BR_rad']
     ]
 
-    with open('robot_data.csv', mode='a', newline='') as file:
+    with open('data.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(row)
 
 
-### --- ИНИЦИАЛИЗАЦИЯ ФАЙЛА ---
+#инициализация файла
 def init_csv():
-    with open('robot_data.csv', mode='w', newline='') as file:
+    with open('data.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([
             'timestamp',
@@ -208,3 +211,29 @@ def init_csv():
             'FR_hum', 'FL_hum', 'BL_hum', 'BR_hum',
             'FR_rad', 'FL_rad', 'BL_rad', 'BR_rad'
         ])
+
+
+init_csv()
+log_data()
+time.sleep(1)
+lay()
+time.sleep(5)
+log_data()
+time.sleep(1)
+
+sit()
+time.sleep(5)
+log_data()
+time.sleep(1)
+ready_for_game()
+time.sleep(5)
+log_data()
+time.sleep(1)
+Stay()
+time.sleep(10)
+log_data()
+time.sleep(1)
+
+lay()
+time.sleep(5)
+log_data()
