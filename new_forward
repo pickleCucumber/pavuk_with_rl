@@ -1,0 +1,34 @@
+def smooth_servo_move(setter_func, start_angle, end_angle, steps=10, delay=0.02):
+    delta = (end_angle - start_angle) / steps
+    for i in range(steps + 1):
+        setter_func(start_angle + i * delta)
+        time.sleep(delay)
+
+def walk_forward(step_delay=0.15):
+    print("Начало шага")
+
+    # Фаза 1: Поднятие и шаг FL
+    smooth_servo_move(Front_Left_radii, 120, 70)  # Подняли лапу
+    smooth_servo_move(Front_Left_clauiculum, 90, 60)
+    time.sleep(step_delay)
+    smooth_servo_move(Front_Left_radii, 70, 120)  # Поставили лапу
+
+    # Фаза 2: BR перенос
+    smooth_servo_move(Back_Right_radii, 120, 70)
+    smooth_servo_move(Back_Right_clauiculum, 90, 60)
+    time.sleep(step_delay)
+    smooth_servo_move(Back_Right_radii, 70, 120)
+
+    # Фаза 3: FR перенос
+    smooth_servo_move(Front_Right_radii, 120, 70)
+    smooth_servo_move(Front_Right_clauiculum, 90, 120)
+    time.sleep(step_delay)
+    smooth_servo_move(Front_Right_radii, 70, 120)
+
+    # Фаза 4: BL перенос
+    smooth_servo_move(Back_Left_radii, 120, 70)
+    smooth_servo_move(Back_Left_clauiculum, 90, 120)
+    time.sleep(step_delay)
+    smooth_servo_move(Back_Left_radii, 70, 120)
+
+    print("Шаг завершён")
