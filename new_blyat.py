@@ -129,7 +129,7 @@ def Stay():
 
     time.sleep(1)
     collarbone(90)
-    radii(100)
+    radii(120)
     time.sleep(1)
     humerus(60)
     time.sleep(1)
@@ -183,40 +183,53 @@ def ready_for_game():
     Back_Left_radii(45)
     Back_Right_radii(45)
 
-def walk_forward(step_delay=0.3):
+def smooth_move(func, start_angle, end_angle, duration=0.3, steps=10):
+    step_delay = duration / steps
+    delta = (end_angle - start_angle) / steps
+    for i in range(steps):
+        func(start_angle + delta * i)
+        time.sleep(step_delay)
+    func(end_angle)
+
+def walk_forward(step_duration=0.3):
     print("Начало шага")
-    # Поднять и вынести вперед FL
-    Front_Left_humerus(30)
-    time.sleep(step_delay)
-    Front_Left_clauiculum(60)
-    time.sleep(step_delay)
-    Front_Left_humerus(60)
-    time.sleep(step_delay)
 
-    # BR
-    Back_Right_humerus(30)
-    time.sleep(step_delay)
-    Back_Right_clauiculum(60)
-    time.sleep(step_delay)
-    Back_Right_humerus(60)
-    time.sleep(step_delay)
+    # Шаг 1: Поднять и вынести вперед FL
+    smooth_move(Back_Right_radii, 120, 140, duration=step_duration)
+    smooth_move(Back_Left_radii, 120, 140, duration=step_duration)
+    smooth_move(Front_Left_radii, 120, 80, duration=step_duration)
+    smooth_move(Front_Left_humerus, 60, 90, duration=step_duration)
+    smooth_move(Front_Left_radii, 80, 120, duration=step_duration)
+    smooth_move(Front_Left_humerus, 90, 60, duration=step_duration)
 
-    # FR
-    Front_Right_humerus(30)
-    time.sleep(step_delay)
-    Front_Right_clauiculum(120)
-    time.sleep(step_delay)
-    Front_Right_humerus(60)
-    time.sleep(step_delay)
 
-    # BL
-    Back_Left_humerus(30)
-    time.sleep(step_delay)
-    Back_Left_clauiculum(120)
-    time.sleep(step_delay)
-    Back_Left_humerus(60)
-    time.sleep(step_delay)
-    print("Шаг завершён")
+
+    # Шаг 2: Перенос BR
+    smooth_move(Back_left_radii, 120, 140, duration=step_duration)
+    smooth_move(Back_Right_humerus, 60, 90, duration=step_duration)
+    smooth_move(Back_Right_radii, 140, 120, duration=step_duration)
+    smooth_move(Back_Right_humerus, 90, 60, duration=step_duration)
+
+
+    # Шаг 3: Перенос FR
+    smooth_move(Back_Right_radii, 120, 140, duration=step_duration)
+
+    smooth_move(Front_Right_radii, 120, 80, duration=step_duration)
+    smooth_move(Front_Right_humerus, 60, 90, duration=step_duration)
+    smooth_move(Front_Right_radii, 80, 120, duration=step_duration)
+    smooth_move(Front_Right_humerus, 90, 60, duration=step_duration)
+
+
+
+    # Шаг 4: Перенос BL
+    smooth_move(Back_Right_radii, 120, 140, duration=step_duration)
+    smooth_move(Back_Left_humerus, 60, 90, duration=step_duration)
+    smooth_move(Back_Left_radii, 140, 120, duration=step_duration)
+    smooth_move(Back_Left_humerus, 90, 60, duration=step_duration)
+
+
+
+    print("Шаг завершён") 
 
 
 def log_data():
@@ -252,9 +265,13 @@ def init_csv():
         ])
 
 
-init_csv()
-log_data()
-time.sleep(1)
+# init_csv()
+# #log_data()
+# time.sleep(1)
+# Stay()
+# time.sleep(5)
+# for i in range(3):
+#     walk_forward()
 
 
 HTML_PAGE = """
@@ -315,4 +332,3 @@ def handle_pose():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
-
