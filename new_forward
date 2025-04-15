@@ -1,34 +1,32 @@
-def smooth_servo_move(setter_func, start_angle, end_angle, steps=10, delay=0.02):
+def smooth_move(func, start_angle, end_angle, duration=0.3, steps=10):
+    step_delay = duration / steps
     delta = (end_angle - start_angle) / steps
-    for i in range(steps + 1):
-        setter_func(start_angle + i * delta)
-        time.sleep(delay)
+    for i in range(steps):
+        func(start_angle + delta * i)
+        time.sleep(step_delay)
+    func(end_angle)
 
-def walk_forward(step_delay=0.15):
+def walk_forward(step_duration=0.3):
     print("Начало шага")
 
-    # Фаза 1: Поднятие и шаг FL
-    smooth_servo_move(Front_Left_radii, 120, 70)  # Подняли лапу
-    smooth_servo_move(Front_Left_clauiculum, 90, 60)
-    time.sleep(step_delay)
-    smooth_servo_move(Front_Left_radii, 70, 120)  # Поставили лапу
+    # Шаг 1: Поднять и вынести вперед FL
+    smooth_move(Front_Left_humerus, 60, 30, duration=step_duration)
+    smooth_move(Front_Left_clauiculum, 90, 60, duration=step_duration)
+    smooth_move(Front_Left_humerus, 30, 60, duration=step_duration)
 
-    # Фаза 2: BR перенос
-    smooth_servo_move(Back_Right_radii, 120, 70)
-    smooth_servo_move(Back_Right_clauiculum, 90, 60)
-    time.sleep(step_delay)
-    smooth_servo_move(Back_Right_radii, 70, 120)
+    # Шаг 2: Перенос BR
+    smooth_move(Back_Right_humerus, 60, 30, duration=step_duration)
+    smooth_move(Back_Right_clauiculum, 90, 60, duration=step_duration)
+    smooth_move(Back_Right_humerus, 30, 60, duration=step_duration)
 
-    # Фаза 3: FR перенос
-    smooth_servo_move(Front_Right_radii, 120, 70)
-    smooth_servo_move(Front_Right_clauiculum, 90, 120)
-    time.sleep(step_delay)
-    smooth_servo_move(Front_Right_radii, 70, 120)
+    # Шаг 3: Перенос FR
+    smooth_move(Front_Right_humerus, 60, 30, duration=step_duration)
+    smooth_move(Front_Right_clauiculum, 90, 120, duration=step_duration)
+    smooth_move(Front_Right_humerus, 30, 60, duration=step_duration)
 
-    # Фаза 4: BL перенос
-    smooth_servo_move(Back_Left_radii, 120, 70)
-    smooth_servo_move(Back_Left_clauiculum, 90, 120)
-    time.sleep(step_delay)
-    smooth_servo_move(Back_Left_radii, 70, 120)
+    # Шаг 4: Перенос BL
+    smooth_move(Back_Left_humerus, 60, 30, duration=step_duration)
+    smooth_move(Back_Left_clauiculum, 90, 120, duration=step_duration)
+    smooth_move(Back_Left_humerus, 30, 60, duration=step_duration)
 
     print("Шаг завершён")
