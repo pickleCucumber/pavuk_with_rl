@@ -1,0 +1,102 @@
+def smooth_transition(start_angles, end_angles, duration=2.0, steps=50):
+    """Общая функция для плавного перехода между углами"""
+    delay = duration / steps
+    for i in range(steps+1):
+        ratio = i / steps
+        current_angles = {}
+        for key in start_angles:
+            current_angles[key] = start_angles[key] + (end_angles[key] - start_angles[key]) * ratio
+        apply_angles(current_angles)
+        time.sleep(delay)
+
+def apply_angles(angles):
+    """Применяет углы ко всем сервомоторам"""
+    # Ключица
+    Front_Right_clauiculum(angles['FR_clav'])
+    Front_Left_clauiculum(angles['FL_clav'])
+    Back_Left_clauiculum(angles['BL_clav'])
+    Back_Right_clauiculum(angles['BR_clav'])
+    
+    # Плечи
+    Front_Right_humerus(angles['FR_hum'])
+    Front_Left_humerus(angles['FL_hum'])
+    Back_Left_humerus(angles['BL_hum'])
+    Back_Right_humerus(angles['BR_hum'])
+    
+    # Предплечья
+    Front_Right_radii(angles['FR_rad'])
+    Front_Left_radii(angles['FL_rad'])
+    Back_Left_radii(angles['BL_rad'])
+    Back_Right_radii(angles['BR_rad'])
+
+def get_current_angles():
+    """Возвращает текущие углы в виде словаря"""
+    return servo_angles.copy()
+
+#--------------------------------------------------------------
+# Плавные переходы между позами
+#--------------------------------------------------------------
+
+def lay_to_stay(duration=3.0):
+    """Плавный переход из лежания в стойку"""
+    start = {
+        'FR_clav': 90, 'FL_clav': 90, 'BL_clav': 90, 'BR_clav': 90,
+        'FR_hum': 0,   'FL_hum': 0,   'BL_hum': 0,   'BR_hum': 0,
+        'FR_rad': 0,   'FL_rad': 0,   'BL_rad': 0,   'BR_rad': 0
+    }
+    end = {
+        'FR_clav': 90, 'FL_clav': 90, 'BL_clav': 90, 'BR_clav': 90,
+        'FR_hum': 60,  'FL_hum': 60,  'BL_hum': 60,  'BR_hum': 60,
+        'FR_rad': 120, 'FL_rad': 120, 'BL_rad': 120, 'BR_rad': 120
+    }
+    smooth_transition(start, end, duration)
+
+def stay_to_lay(duration=3.0):
+    """Плавный переход из стойки в лежание"""
+    start = get_current_angles()
+    end = {
+        'FR_clav': 90, 'FL_clav': 90, 'BL_clav': 90, 'BR_clav': 90,
+        'FR_hum': 0,   'FL_hum': 0,   'BL_hum': 0,   'BR_hum': 0,
+        'FR_rad': 0,   'FL_rad': 0,   'BL_rad': 0,   'BR_rad': 0
+    }
+    smooth_transition(start, end, duration)
+
+def lay_to_sit(duration=2.0):
+    """Плавный переход из лежания в сидение"""
+    start = get_current_angles()
+    end = {
+        'FR_clav': 90, 'FL_clav': 90, 'BL_clav': 90, 'BR_clav': 90,
+        'FR_hum': 90,  'FL_hum': 90,  'BL_hum': 45,  'BR_hum': 45,
+        'FR_rad': 100, 'FL_rad': 100, 'BL_rad': 45,  'BR_rad': 45
+    }
+    smooth_transition(start, end, duration)
+
+def sit_to_lay(duration=2.0):
+    """Плавный переход из сидения в лежание"""
+    start = get_current_angles()
+    end = {
+        'FR_clav': 90, 'FL_clav': 90, 'BL_clav': 90, 'BR_clav': 90,
+        'FR_hum': 0,   'FL_hum': 0,   'BL_hum': 0,   'BR_hum': 0,
+        'FR_rad': 0,   'FL_rad': 0,   'BL_rad': 0,   'BR_rad': 0
+    }
+    smooth_transition(start, end, duration)
+
+def sit_to_stay(duration=2.0):
+    """Плавный переход из сидения в стойку"""
+    start = get_current_angles()
+    end = {
+        'FR_clav': 90, 'FL_clav': 90, 'BL_clav': 90, 'BR_clav': 90,
+        'FR_hum': 60,  'FL_hum': 60,  'BL_hum': 60,  'BR_hum': 60,
+        'FR_rad': 120, 'FL_rad': 120, 'BL_rad': 120, 'BR_rad': 120
+    }
+    smooth_transition(start, end, duration)
+
+def stay_to_sit(duration=2.0):
+    """Плавный переход из стойки в сидение"""
+    start = get_current_angles()
+    end = {
+        'FR_clav': 90, 'FL_clav': 90, 'BL_clav': 90, 'BR_clav': 90,
+        'FR_hum': 90,  'FL_hum': 90,  'BL_hum': 45,  'BR_hum': 45,
+        'FR_rad': 100, 'FL_rad': 100, 'BL_rad': 45,  'BR_rad': 45
+    }
+    smooth_transition(start, end, duration)
