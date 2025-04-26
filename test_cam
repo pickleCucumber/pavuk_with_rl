@@ -1,16 +1,24 @@
-# Удалите старый билд-каталог (если есть)
-rm -rf build
+The Meson build system
+Version: 1.7.2
+Source dir: /home/rpi/libcamera
+Build dir: /home/rpi/libcamera/build
+Build type: native build
+DEPRECATION: Option 'v4l2' value 'true' is replaced by 'enabled'
 
-# Соберите с актуальными параметрами:
-meson setup build \
-    --prefix=/usr \
-    -Dpipelines="rpi/vc4" \
-    -Dipas="rpi/vc4" \
-    -Dpybind11-python=python3.9 \
-    -Dpython=python3.9 \
-    -Dv4l2=true \
-    -Dgstreamer=disabled \
-    -Dtest=false
+meson.build:3:0: ERROR: Unknown options: "pybind11-python, python"
+
+A full log can be found at /home/rpi/libcamera/build/meson-logs/meson-log.txt
+rpi@rpi:~/libcamera $ meson setup build     --prefix=/usr     -Dpipelines="rpi/vc4"     -Dipas="rpi/vc4"     -Dpybind11-python=python3.9     -Dpython=python3.9     -Dv4l2=true     -Dgstreamer=disabled     -Dtest=false
+The Meson build system
+Version: 1.7.2
+Source dir: /home/rpi/libcamera
+Build dir: /home/rpi/libcamera/build
+Build type: native build
+DEPRECATION: Option 'v4l2' value 'true' is replaced by 'enabled'
+
+meson.build:3:0: ERROR: Unknown options: "pybind11-python, python"
+
+A full log can be found at /home/rpi/libcamera/build/meson-logs/meson-log.txt
 
 
 
