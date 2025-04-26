@@ -1,24 +1,32 @@
-import cv2
+rpi@rpi:~ $ ls /dev/video*
+/dev/video0   /dev/video12  /dev/video15  /dev/video19  /dev/video22
+/dev/video10  /dev/video13  /dev/video16  /dev/video20  /dev/video23
+/dev/video11  /dev/video14  /dev/video18  /dev/video21  /dev/video31
+rpi@rpi:~ $ v4l2-ctl --list-devices
+bcm2835-codec-decode (platform:bcm2835-codec):
+	/dev/video10
+	/dev/video11
+	/dev/video12
+	/dev/video18
+	/dev/video31
+	/dev/media3
 
-cap = cv2.VideoCapture(0)
+bcm2835-isp (platform:bcm2835-isp):
+	/dev/video13
+	/dev/video14
+	/dev/video15
+	/dev/video16
+	/dev/video20
+	/dev/video21
+	/dev/video22
+	/dev/video23
+	/dev/media1
+	/dev/media2
 
-# Настройки камеры
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+unicam (platform:fe801000.csi):
+	/dev/video0
+	/dev/media4
 
-cv2.startWindowThread()  # 🚨 нужно вызывать для Qt!
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("Не удалось получить кадр")
-        break
-
-    frame = cv2.flip(frame, 1)  # Зеркалирование
-    cv2.imshow("Просто камера", frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
+rpivid (platform:rpivid):
+	/dev/video19
+	/dev/media0
