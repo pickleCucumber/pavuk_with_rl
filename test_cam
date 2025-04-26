@@ -1,14 +1,86 @@
-Traceback (most recent call last):
-  File "/home/rpi/Desktop/t.py", line 1, in <module>
-    from picamera2 import Picamera2
-  File "/home/rpi/.local/lib/python3.9/site-packages/picamera2/__init__.py", line 4, in <module>
-    import libcamera
-ModuleNotFoundError: No module named 'libcamera'
-rpi@rpi:~ $ pip install libcamera
-Defaulting to user installation because normal site-packages is not writeable
-Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
-ERROR: Could not find a version that satisfies the requirement libcamera (from versions: none)
-ERROR: No matching distribution found for libcamera
+rep -r MODULES /etc/initramfs-tools
+
+Error please report bug on initramfs-tools
+Include the output of 'mount' and 'cat /proc/mounts'
+update-initramfs: failed for /boot/initrd.img-6.12.20+rpt-rpi-v8 with 1.
+run-parts: /etc/kernel/postinst.d/initramfs-tools exited with return code 1
+dpkg: ошибка при обработке пакета linux-image-6.12.20+rpt-rpi-v8 (--configure):
+ подпроцесс из пакета linux-image-6.12.20+rpt-rpi-v8 установлен сценарий post-in
+stallation возвратил код ошибки 1
+dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-6.12.20+rpt
+-rpi-2712:
+ linux-headers-6.12.20+rpt-rpi-2712 зависит от linux-image-6.12.20+rpt-rpi-2712 
+(= 1:6.12.20-1+rpt1~bpo12+1) | linux-image-6.12.20+rpt-rpi-2712-unsigned (= 1:6.
+12.20-1+rpt1~bpo12+1), однако:
+  Пакет linux-image-6.12.20+rpt-rpi-2712 пока не настроен.
+  Пакет linux-image-6.12.20+rpt-rpi-2712-unsigned не установлен.
+
+dpkg: ошибка при обработке пакета linux-headers-6.12.20+rpt-rpi-2712 (--configur
+e):
+ проблемы зависимостей — оставляем не настроенным
+Настраивается пакет python3-pybind11 (2.10.3-1) …
+Настраивается пакет libpcre2-dev:arm64 (10.42-1) …
+Настраивается пакет libselinux1-dev:arm64 (3.4-1+b6) …
+dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-6.12.20+rpt
+-rpi-v8:
+ linux-headers-6.12.20+rpt-rpi-v8 зависит от linux-image-6.12.20+rpt-rpi-v8 (= 1
+:6.12.20-1+rpt1~bpo12+1) | linux-image-6.12.20+rpt-rpi-v8-unsigned (= 1:6.12.20-
+1+rpt1~bpo12+1), однако:
+  Пакет linux-image-6.12.20+rpt-rpi-v8 пока не настроен.
+  Пакет linux-image-6.12.20+rpt-rpi-v8-unsigned не установлен.
+
+dpkg: ошибка при обработке пакета linux-headers-6.12.20+rpt-rpi-v8 (--configure)
+:
+ проблемы зависимостей — оставляем не настроенным
+dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-rpi-2712:
+ linux-headers-rpi-2712 зависит от linux-headers-6.12.20+rpt-rpi-2712 (= 1:6.12.
+20-1+rpt1~bpo12+1), однако:
+  Пакет linux-headers-6.12.20+rpt-rpi-2712 пока не настроен.
+
+dpkg: ошибка при обработке пакета linux-headers-rpi-2712 (--configure):
+ проблемы зависимостей — оставляем не настроенным
+dpkg: зависимости пакетов не позволяют настроить пакет linux-image-rpi-v8:
+ linux-image-rpi-v8 зависит от linux-image-6.12.20+rpt-rpi-v8 (= 1:6.12.20-1+rpt
+1~bpo12+1), однако:
+  Пакет linux-image-6.12.20+rpt-rpi-v8 пока не настроен.
+
+dpkg: ошибка при обработке пакета linux-image-rpi-v8 (--configure):
+ проблемы зависимостей — оставляем не настроенным
+Настраивается пакет libmount-dev:arm64 (2.38.1-5+deb12u3) …
+dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-rpi-v8:
+ linux-headers-rpi-v8 зависит от linux-headers-6.12.20+rpt-rpi-v8 (= 1:6.12.20-1
++rpt1~bpo12+1), однако:
+  Пакет linux-headers-6.12.20+rpt-rpi-v8 пока не настроен.
+
+dpkg: ошибка при обработке пакета linux-headers-rpi-v8 (--configure):
+ проблемы зависимостей — оставляем не настроенным
+Настраивается пакет libglib2.0-dev:arm64 (2.74.6-2+deb12u5) …
+Обрабатываются триггеры для libc-bin (2.36-9+rpt2+deb12u10) …
+Обрабатываются триггеры для man-db (2.11.2-2) …
+Обрабатываются триггеры для libglib2.0-0:arm64 (2.74.6-2+deb12u5) …
+Обрабатываются триггеры для initramfs-tools (0.142+rpt3+deb12u1) …
+update-initramfs: Generating /boot/initrd.img-6.6.62+rpt-rpi-v8
+mkinitramfs: failed to determine device for /
+mkinitramfs: workaround is MODULES=most, check:
+grep -r MODULES /etc/initramfs-tools
+
+Error please report bug on initramfs-tools
+Include the output of 'mount' and 'cat /proc/mounts'
+update-initramfs: failed for /boot/initrd.img-6.6.62+rpt-rpi-v8 with 1.
+dpkg: ошибка при обработке пакета initramfs-tools (--configure):
+ подпроцесс из пакета initramfs-tools установлен сценарий post-installation возв
+ратил код ошибки 1
+При обработке следующих пакетов произошли ошибки:
+ linux-image-6.12.20+rpt-rpi-2712
+ linux-image-rpi-2712
+ linux-image-6.12.20+rpt-rpi-v8
+ linux-headers-6.12.20+rpt-rpi-2712
+ linux-headers-6.12.20+rpt-rpi-v8
+ linux-headers-rpi-2712
+ linux-image-rpi-v8
+ linux-headers-rpi-v8
+ initramfs-tools
+E: Sub-process /usr/bin/dpkg returned an error code (1)
 
 
 
