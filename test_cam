@@ -2,9 +2,11 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 
-# Ставим фиксированное разрешение
+# Настройки камеры
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+cv2.startWindowThread()  # 🚨 нужно вызывать для Qt!
 
 while True:
     ret, frame = cap.read()
@@ -12,7 +14,7 @@ while True:
         print("Не удалось получить кадр")
         break
 
-    frame = cv2.flip(frame, 1)  # Зеркалить для естественного вида
+    frame = cv2.flip(frame, 1)  # Зеркалирование
     cv2.imshow("Просто камера", frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
