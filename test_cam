@@ -1,49 +1,11 @@
+PYTHON=/usr/local/bin/python3.9 meson setup build -Dpycamera=enabled -Dprefix=/usr/local
+Directory already configured.
 
-Dependency libexif skipped: feature android disabled
-Dependency libjpeg skipped: feature android disabled
-Run-time dependency libevent_pthreads found: NO (tried pkgconfig and cmake)
-Run-time dependency libevent_pthreads found: NO (tried pkgconfig and cmake)
-Run-time dependency libtiff-4 found: NO (tried pkgconfig and cmake)
-Run-time dependency GTest found: NO (tried pkgconfig and system)
-Looking for a fallback subproject for the dependency gtest
-Downloading gtest source from https://github.com/google/googletest/archive/release-1.11.0.zip
-Downloading: 100%|############################| 1.07M/1.07M 2.39MB/s eta 00:00
-Downloading gtest patch from https://wrapdb.mesonbuild.com/v2/gtest_1.11.0-1/get_patch
-Downloading: 100%|#############################| 2.46k/2.46k 645kB/s eta 00:00
+Just run your build command (e.g. ninja) and Meson will regenerate as necessary.
+Run "meson setup --reconfigure" to force Meson to regenerate.
 
-Executing subproject gtest 
-
-gtest| Project name: gtest
-gtest| Project version: 1.11.0
-gtest| C++ compiler for the host machine: c++ (gcc 12.2.0 "c++ (Debian 12.2.0-14) 12.2.0")
-gtest| C++ linker for the host machine: c++ ld.bfd 2.40
-gtest| Dependency threads found: YES unknown (cached)
-gtest| Dependency threads found: YES unknown (cached)
-gtest| Dependency threads found: YES unknown (cached)
-gtest| Dependency threads found: YES unknown (cached)
-gtest| Build targets in project: 113
-gtest| Subproject gtest finished.
-
-Dependency gtest from subproject subprojects/googletest-release-1.11.0 found: YES 1.11.0
-Run-time dependency qt6 (modules: Core, Gui, OpenGL, OpenGLWidgets, Widgets) found: NO (tried pkgconfig)
-Run-time dependency glib-2.0 found: YES 2.74.6
-Run-time dependency gstreamer-video-1.0 found: NO (tried pkgconfig and cmake)
-Run-time dependency gstreamer-allocators-1.0 found: NO (tried pkgconfig and cmake)
-Run-time dependency python3 found: YES 3.11
-Run-time dependency pybind11 found: YES 2.10.3
-Configuring libcamerify using configuration
-Program doxygen found: NO
-Program dot found: NO
-Program sphinx-build-3 sphinx-build found: NO
-Configuring config.h using configuration
-Program python3 (jinja2, yaml, jinja2, ply) found: NO modules: jinja2, jinja2
-
-meson.build:284:7: ERROR: python3 is missing modules: yaml, ply
-
-A full log can be found at /home/rpi/libcamera/build/meson-logs/meson-log.txt
-
-
-
+If build failures persist, run "meson setup --wipe" to rebuild from scratch
+using the same options as passed when configuring the build.
 
 
 
