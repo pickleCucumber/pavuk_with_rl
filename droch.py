@@ -60,6 +60,16 @@ while True:
     cv2.putText(img, f'Жест: {gesture}', (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     cv2.imshow("Gesture Recognition", img)
 
+
+
+
+    /usr/local/bin/python3.9 /home/rpi/Desktop/camera.py
+Error in cpuinfo: prctl(PR_SVE_GET_VL) failed
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+W0000 00:00:1745675626.293108   13185 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1745675626.415647   13182 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
