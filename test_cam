@@ -1,86 +1,70 @@
-rep -r MODULES /etc/initramfs-tools
-
-Error please report bug on initramfs-tools
-Include the output of 'mount' and 'cat /proc/mounts'
-update-initramfs: failed for /boot/initrd.img-6.12.20+rpt-rpi-v8 with 1.
-run-parts: /etc/kernel/postinst.d/initramfs-tools exited with return code 1
-dpkg: ошибка при обработке пакета linux-image-6.12.20+rpt-rpi-v8 (--configure):
- подпроцесс из пакета linux-image-6.12.20+rpt-rpi-v8 установлен сценарий post-in
-stallation возвратил код ошибки 1
-dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-6.12.20+rpt
--rpi-2712:
- linux-headers-6.12.20+rpt-rpi-2712 зависит от linux-image-6.12.20+rpt-rpi-2712 
-(= 1:6.12.20-1+rpt1~bpo12+1) | linux-image-6.12.20+rpt-rpi-2712-unsigned (= 1:6.
-12.20-1+rpt1~bpo12+1), однако:
-  Пакет linux-image-6.12.20+rpt-rpi-2712 пока не настроен.
-  Пакет linux-image-6.12.20+rpt-rpi-2712-unsigned не установлен.
-
-dpkg: ошибка при обработке пакета linux-headers-6.12.20+rpt-rpi-2712 (--configur
-e):
- проблемы зависимостей — оставляем не настроенным
-Настраивается пакет python3-pybind11 (2.10.3-1) …
-Настраивается пакет libpcre2-dev:arm64 (10.42-1) …
-Настраивается пакет libselinux1-dev:arm64 (3.4-1+b6) …
-dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-6.12.20+rpt
--rpi-v8:
- linux-headers-6.12.20+rpt-rpi-v8 зависит от linux-image-6.12.20+rpt-rpi-v8 (= 1
-:6.12.20-1+rpt1~bpo12+1) | linux-image-6.12.20+rpt-rpi-v8-unsigned (= 1:6.12.20-
-1+rpt1~bpo12+1), однако:
-  Пакет linux-image-6.12.20+rpt-rpi-v8 пока не настроен.
-  Пакет linux-image-6.12.20+rpt-rpi-v8-unsigned не установлен.
-
-dpkg: ошибка при обработке пакета linux-headers-6.12.20+rpt-rpi-v8 (--configure)
-:
- проблемы зависимостей — оставляем не настроенным
-dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-rpi-2712:
- linux-headers-rpi-2712 зависит от linux-headers-6.12.20+rpt-rpi-2712 (= 1:6.12.
-20-1+rpt1~bpo12+1), однако:
-  Пакет linux-headers-6.12.20+rpt-rpi-2712 пока не настроен.
-
-dpkg: ошибка при обработке пакета linux-headers-rpi-2712 (--configure):
- проблемы зависимостей — оставляем не настроенным
-dpkg: зависимости пакетов не позволяют настроить пакет linux-image-rpi-v8:
- linux-image-rpi-v8 зависит от linux-image-6.12.20+rpt-rpi-v8 (= 1:6.12.20-1+rpt
-1~bpo12+1), однако:
-  Пакет linux-image-6.12.20+rpt-rpi-v8 пока не настроен.
-
-dpkg: ошибка при обработке пакета linux-image-rpi-v8 (--configure):
- проблемы зависимостей — оставляем не настроенным
-Настраивается пакет libmount-dev:arm64 (2.38.1-5+deb12u3) …
-dpkg: зависимости пакетов не позволяют настроить пакет linux-headers-rpi-v8:
- linux-headers-rpi-v8 зависит от linux-headers-6.12.20+rpt-rpi-v8 (= 1:6.12.20-1
-+rpt1~bpo12+1), однако:
-  Пакет linux-headers-6.12.20+rpt-rpi-v8 пока не настроен.
-
-dpkg: ошибка при обработке пакета linux-headers-rpi-v8 (--configure):
- проблемы зависимостей — оставляем не настроенным
-Настраивается пакет libglib2.0-dev:arm64 (2.74.6-2+deb12u5) …
-Обрабатываются триггеры для libc-bin (2.36-9+rpt2+deb12u10) …
-Обрабатываются триггеры для man-db (2.11.2-2) …
-Обрабатываются триггеры для libglib2.0-0:arm64 (2.74.6-2+deb12u5) …
-Обрабатываются триггеры для initramfs-tools (0.142+rpt3+deb12u1) …
-update-initramfs: Generating /boot/initrd.img-6.6.62+rpt-rpi-v8
-mkinitramfs: failed to determine device for /
-mkinitramfs: workaround is MODULES=most, check:
-grep -r MODULES /etc/initramfs-tools
-
-Error please report bug on initramfs-tools
-Include the output of 'mount' and 'cat /proc/mounts'
-update-initramfs: failed for /boot/initrd.img-6.6.62+rpt-rpi-v8 with 1.
-dpkg: ошибка при обработке пакета initramfs-tools (--configure):
- подпроцесс из пакета initramfs-tools установлен сценарий post-installation возв
-ратил код ошибки 1
-При обработке следующих пакетов произошли ошибки:
- linux-image-6.12.20+rpt-rpi-2712
- linux-image-rpi-2712
- linux-image-6.12.20+rpt-rpi-v8
- linux-headers-6.12.20+rpt-rpi-2712
- linux-headers-6.12.20+rpt-rpi-v8
- linux-headers-rpi-2712
- linux-image-rpi-v8
- linux-headers-rpi-v8
- initramfs-tools
-E: Sub-process /usr/bin/dpkg returned an error code (1)
+rpi@rpi:~ $ df -h
+Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
+/dev/root           59G          11G   45G           19% /
+devtmpfs           1,6G            0  1,6G            0% /dev
+tmpfs              1,9G         6,7M  1,9G            1% /dev/shm
+tmpfs              749M         1,4M  747M            1% /run
+tmpfs              5,0M          12K  5,0M            1% /run/lock
+/dev/mmcblk0p1     510M          68M  443M           14% /boot/firmware
+tmpfs              375M          48K  375M            1% /run/user/1000
+rpi@rpi:~ $ mount
+/dev/mmcblk0p2 on / type ext4 (rw,noatime)
+devtmpfs on /dev type devtmpfs (rw,relatime,size=1650896k,nr_inodes=412724,mode=755)
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,nodev,size=766256k,nr_inodes=819200,mode=755)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+bpf on /sys/fs/bpf type bpf (rw,nosuid,nodev,noexec,relatime,mode=700)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=29,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=4141)
+debugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+tracefs on /sys/kernel/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)
+fusectl on /sys/fs/fuse/connections type fusectl (rw,nosuid,nodev,noexec,relatime)
+configfs on /sys/kernel/config type configfs (rw,nosuid,nodev,noexec,relatime)
+ramfs on /run/credentials/systemd-sysctl.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+ramfs on /run/credentials/systemd-sysusers.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+ramfs on /run/credentials/systemd-tmpfiles-setup-dev.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+/dev/mmcblk0p1 on /boot/firmware type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro)
+ramfs on /run/credentials/systemd-tmpfiles-setup.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+sunrpc on /run/rpc_pipefs type rpc_pipefs (rw,relatime)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=383124k,nr_inodes=95781,mode=700,uid=1000,gid=1000)
+gvfsd-fuse on /run/user/1000/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+portal on /run/user/1000/doc type fuse.portal (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+rpi@rpi:~ $ cat /proc/mounts
+/dev/root / ext4 rw,noatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=1650896k,nr_inodes=412724,mode=755 0 0
+proc /proc proc rw,relatime 0 0
+sysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0
+securityfs /sys/kernel/security securityfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /dev/shm tmpfs rw,nosuid,nodev 0 0
+devpts /dev/pts devpts rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000 0 0
+tmpfs /run tmpfs rw,nosuid,nodev,size=766256k,nr_inodes=819200,mode=755 0 0
+tmpfs /run/lock tmpfs rw,nosuid,nodev,noexec,relatime,size=5120k 0 0
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0
+pstore /sys/fs/pstore pstore rw,nosuid,nodev,noexec,relatime 0 0
+bpf /sys/fs/bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700 0 0
+systemd-1 /proc/sys/fs/binfmt_misc autofs rw,relatime,fd=29,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=4141 0 0
+debugfs /sys/kernel/debug debugfs rw,nosuid,nodev,noexec,relatime 0 0
+mqueue /dev/mqueue mqueue rw,nosuid,nodev,noexec,relatime 0 0
+tracefs /sys/kernel/tracing tracefs rw,nosuid,nodev,noexec,relatime 0 0
+fusectl /sys/fs/fuse/connections fusectl rw,nosuid,nodev,noexec,relatime 0 0
+configfs /sys/kernel/config configfs rw,nosuid,nodev,noexec,relatime 0 0
+ramfs /run/credentials/systemd-sysctl.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0
+ramfs /run/credentials/systemd-sysusers.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0
+ramfs /run/credentials/systemd-tmpfiles-setup-dev.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0
+/dev/mmcblk0p1 /boot/firmware vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro 0 0
+ramfs /run/credentials/systemd-tmpfiles-setup.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0
+sunrpc /run/rpc_pipefs rpc_pipefs rw,relatime 0 0
+binfmt_misc /proc/sys/fs/binfmt_misc binfmt_misc rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /run/user/1000 tmpfs rw,nosuid,nodev,relatime,size=383124k,nr_inodes=95781,mode=700,uid=1000,gid=1000 0 0
+gvfsd-fuse /run/user/1000/gvfs fuse.gvfsd-fuse rw,nosuid,nodev,relatime,user_id=1000,group_id=1000 0 0
+portal /run/user/1000/doc fuse.portal rw,nosuid,nodev,relatime,user_id=1000,group_id=1000 0 0
 
 
 
