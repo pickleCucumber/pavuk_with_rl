@@ -1,17 +1,16 @@
-# Очистка предыдущей сборки
+# Удалите старый билд-каталог (если есть)
 rm -rf build
 
-# Генерация с явным указанием пути
-meson build --prefix=/usr \
--Dpipelines=raspberrypi \
--Dipas=raspberrypi \
--Dpybind11-python=$(which python3.9) \
--Dpython=$(which python3.9)
-
-# Сборка и установка
-ninja -C build
-sudo ninja -C build install
-
+# Соберите с актуальными параметрами:
+meson setup build \
+    --prefix=/usr \
+    -Dpipelines="rpi/vc4" \
+    -Dipas="rpi/vc4" \
+    -Dpybind11-python=python3.9 \
+    -Dpython=python3.9 \
+    -Dv4l2=true \
+    -Dgstreamer=disabled \
+    -Dtest=false
 
 
 
