@@ -1,15 +1,16 @@
-meson build --prefix=/usr -Dpipelines=raspberrypi -Dipas=raspberrypi -Dpybind11-python=python3.9 -Dpython=python3.9
-Directory already configured.
+# Очистка предыдущей сборки
+rm -rf build
 
-Just run your build command (e.g. ninja) and Meson will regenerate as necessary.
-Run "meson setup --reconfigure" to force Meson to regenerate.
+# Генерация с явным указанием пути
+meson build --prefix=/usr \
+-Dpipelines=raspberrypi \
+-Dipas=raspberrypi \
+-Dpybind11-python=$(which python3.9) \
+-Dpython=$(which python3.9)
 
-If build failures persist, run "meson setup --wipe" to rebuild from scratch
-using the same options as passed when configuring the build.
-
-ERROR: Value "raspberrypi" for option "pipelines" is not in allowed choices: "all, auto, imx8-isi, ipu3, mali-c55, rkisp1, rpi/pisp, rpi/vc4, simple, uvcvideo, vimc, virtual"
-WARNING: Running the setup command as `meson [options]` instead of `meson setup [options]` is ambiguous and deprecated.
-
+# Сборка и установка
+ninja -C build
+sudo ninja -C build install
 
 
 
