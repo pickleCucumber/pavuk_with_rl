@@ -1,5 +1,5 @@
 export PYTHON=python3.9
-export PATH=/usr/local/bin:$PATH  # Если Python установлен в /usr/local/bin
+export PATH=/usr/local/bin:$PYTHON  
 
 meson setup build \
     --prefix=/usr \
