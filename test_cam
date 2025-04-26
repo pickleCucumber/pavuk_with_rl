@@ -1,27 +1,14 @@
-Collecting v4l2-python3 (from picamera2)
-  Using cached https://www.piwheels.org/simple/v4l2-python3/v4l2_python3-0.3.5-py3-none-any.whl (22 kB)
-Collecting python-prctl (from picamera2)
-  Using cached python-prctl-1.8.1.tar.gz (28 kB)
-  Installing build dependencies ... done
-  Getting requirements to build wheel ... error
-  error: subprocess-exited-with-error
-  
-  Getting requirements to build wheel did not run successfully.
-  exit code: 1
-  
-  [1 lines of output]
-  You need to install libcap development headers to build this module
-  [end of output]
-  
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-error: subprocess-exited-with-error
-
-Getting requirements to build wheel did not run successfully.
-exit code: 1
-
-See above for output.
-
-note: This error originates from a subprocess, and is likely not a problem with pip.
+Traceback (most recent call last):
+  File "/home/rpi/Desktop/t.py", line 1, in <module>
+    from picamera2 import Picamera2
+  File "/home/rpi/.local/lib/python3.9/site-packages/picamera2/__init__.py", line 4, in <module>
+    import libcamera
+ModuleNotFoundError: No module named 'libcamera'
+rpi@rpi:~ $ pip install libcamera
+Defaulting to user installation because normal site-packages is not writeable
+Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+ERROR: Could not find a version that satisfies the requirement libcamera (from versions: none)
+ERROR: No matching distribution found for libcamera
 
 
 
