@@ -1,0 +1,99 @@
+export PYTHON=python3.9
+export PATH=/usr/local/bin:$PYTHON  
+
+meson setup build \
+    --prefix=/usr \
+    -Dpipelines="rpi/vc4" \
+    -Dipas="rpi/vc4" \
+    -Dv4l2=enabled \
+    -Dpycamera=enabled \
+    -Dgstreamer=disabled
+
+
+
+
+
+
+
+
+import cv2
+import numpy as np
+from picamera import PiCamera
+from picamera.array import PiRGBArray
+import mediapipe as mp
+
+# Инициализация MediaPipe Hands
+mp_hands = mp.solutions.hands
+mp_drawing = mp.solutions.drawing_utils
+hands = mp_hands.Hands(
+    max_num_hands=1,
+    min_detection_confidence=0.7,
+    min_tracking_confidence=0.5
+)
+
+# Инициализация камеры
+camera = PiCamera()
+camera.resolution = (640, 480)
+camera.framerate = 10
+raw_capture = PiRGBArray(camera, size=(640, 480))
+
+# Пауза для инициализации камеры
+time.sleep(2)
+
+def count_fingers(hand_landmarks):
+    # Анализ ключевых точек для определения поднятых пальцев
+    tip_ids = [4, 8, 12, 16, 20]
+    fingers = []
+    
+    # Большой палец
+    if hand_landmarks.landmark[4].x < hand_landmarks.landmark[3].x:
+        fingers.append(1)
+    else:
+        fingers.append(0)
+    
+    # Остальные пальцы
+    for id in range(1,5):
+        if hand_landmarks.landmark[tip_ids[id]].y < hand_landmarks.landmark[tip_ids[id]-2].y:
+            fingers.append(1)
+        else:
+            fingers.append(0)
+    
+    return fingers.count(1)
+
+for frame in camera.capture_continuous(
+    raw_capture, format="bgr", use_video_port=True
+):
+    image = frame.array
+    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    
+    # Обнаружение рук
+    results = hands.process(rgb_image)
+    
+    if results.multi_hand_landmarks:
+        for hand_landmarks in results.multi_hand_landmarks:
+            # Отрисовка ключевых точек
+            mp_drawing.draw_landmarks(
+                image, hand_landmarks, mp_hands.HAND_CONNECTIONS
+            )
+            
+            # Подсчет пальцев
+            finger_count = count_fingers(hand_landmarks)
+            
+            # Отображение результата
+            cv2.putText(image, f"Fingers: {finger_count}", (10, 50),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+    
+    # Отображение кадра
+    cv2.imshow('Hand Gesture Recognition', image)
+    
+    # Очистка буфера
+    raw_capture.truncate(0)
+    
+    # Выход по нажатию 'q'
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Освобождение ресурсов
+hands.close()
+cv2.destroyAllWindows()
+camera.close()

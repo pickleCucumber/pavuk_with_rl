@@ -1,0 +1,112 @@
+import time
+import csv
+from mpu6050 import mpu6050
+from adafruit_servokit import ServoKit
+
+# PID Controller 
+class PIDController:
+    def __init__(self, Kp, Ki, Kd):
+        self.Kp = Kp
+        self.Ki = Ki
+        self.Kd = Kd
+        self.integral = 0
+        self.prev_error = 0
+
+    def compute(self, error, dt):
+        self.integral += error * dt
+        derivative = (error - self.prev_error) / dt if dt > 0 else 0
+        output = self.Kp * error + self.Ki * self.integral + self.Kd * derivative
+        self.prev_error = error
+        return output
+
+sensor = mpu6050(0x68)
+kit = ServoKit(channels=16)
+
+SERVO_MAP = {
+    'FR_radii': 0,
+    'FL_radii': 1,
+    'BL_radii': 2,
+    'BR_radii': 3,
+    'FR_humerus': 4,
+    'FL_humerus': 5,
+    'BL_humerus': 6,
+    'BR_humerus': 7,
+    'FR_clavicle': 8,
+    'FL_clavicle': 9,
+    'BL_clavicle': 10,
+    'BR_clavicle': 11,
+}
+
+OFFSET = {
+    'FR_radii': 90,
+    'FL_radii': 90,
+    'BL_radii': 90,
+    'BR_radii': 90,
+    'FR_humerus': 60,
+    'FL_humerus': 60,
+    'BL_humerus': 60,
+    'BR_humerus': 60,
+    'FR_clavicle': 90,
+    'FL_clavicle': 90,
+    'BL_clavicle': 90,
+    'BR_clavicle': 90,
+}
+
+LOG_FILE = "balance_log.csv"
+
+# инициализация файла
+with open(LOG_FILE, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(["timestamp", "accel_x", "accel_y", "accel_z"] + list(OFFSET.keys()))
+
+def log_state(accel_data, offsets):
+    with open(LOG_FILE, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        row = [time.time(), accel_data['x'], accel_data['y'], accel_data['z']] + [offsets[k] for k in OFFSET]
+        writer.writerow(row)
+
+def apply_offsets():
+    for name, angle in OFFSET.items():
+        idx = SERVO_MAP[name]
+        if 'FL' in name or 'BL' in name:
+            kit.servo[idx].angle = angle
+        else:
+            kit.servo[idx].angle = 180 - angle
+
+def optimize_stay_position():
+    print("Оптимизация баланса в позиции стоя...")
+    pid_x = PIDController(Kp=1.5, Ki=0.0, Kd=0.5)
+    pid_y = PIDController(Kp=1.5, Ki=0.0, Kd=0.5)
+    
+    for i in range(100):
+        accel = sensor.get_accel_data()
+        error_x = 0 - accel['x']
+        error_y = 0 - accel['y']
+        
+        dt = 0.05
+        corr_x = pid_x.compute(error_x, dt)
+        corr_y = pid_y.compute(error_y, dt)
+
+        OFFSET['FR_humerus'] += corr_y
+        OFFSET['FL_humerus'] += corr_y
+        OFFSET['BR_humerus'] += corr_y
+        OFFSET['BL_humerus'] += corr_y
+
+        OFFSET['FR_clavicle'] += corr_x
+        OFFSET['FL_clavicle'] += corr_x
+        OFFSET['BR_clavicle'] += corr_x
+        OFFSET['BL_clavicle'] += corr_x
+
+        for key in OFFSET:
+            OFFSET[key] = max(30, min(150, OFFSET[key]))
+
+        apply_offsets()
+        log_state(accel, OFFSET)
+        time.sleep(dt)
+
+    print("Оптимизация завершена. Итоговые OFFSET:")
+    for k, v in OFFSET.items():
+        print(f"{k}: {v:.1f}")
+
+if __name__ == "__main__":
+    optimize_stay_position()

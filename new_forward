@@ -1,0 +1,92 @@
+def move_forward(step_count=5, step_delay=0.2):
+    """Движение вперед с использованием троттинга"""
+    # Начальная поза
+    Stay()
+    time.sleep(1)
+    
+    # Параметры движения
+    lift_height = 30  # Высота подъема ноги
+    step_size = 15    # Шаг вперед/назад
+    neutral_pos = 90  # Нейтральное положение
+    
+    for step in range(step_count):
+        print(f"Шаг {step + 1}/{step_count}")
+        
+        # Фаза 1: Передняя правая и задняя левая ноги поднимаются и двигаются вперед
+        # Поднимаем ноги
+        Front_Left_humerus(60 - lift_height)
+        Back_Right_humerus(60 - lift_height)
+        
+        # Двигаем вперед
+        Front_Left_clauiculum(90 + step_size)
+        Back_Right_clauiculum(90 + step_size)
+        time.sleep(step_delay)
+        
+        # Опускаем ноги
+        Front_Left_humerus(60)
+        Back_Right_humerus(60)
+        time.sleep(step_delay)
+        
+        # Фаза 2: Передняя левая и задняя правая ноги поднимаются и двигаются вперед
+        # Поднимаем ноги
+        Front_Right_humerus(60 - lift_height)
+        Back_Left_humerus(60 - lift_height)
+        
+        # Двигаем вперед
+        Front_Right_clauiculum(90 + step_size)
+        Back_Left_clauiculum(90 + step_size)
+        time.sleep(step_delay)
+        
+        # Опускаем ноги
+        Front_Right_humerus(60)
+        Back_Left_humerus(60)
+        time.sleep(step_delay)
+        
+        # Возвращаем все ноги в нейтральное положение
+        collarbone(90)
+        humerus(60)
+        time.sleep(step_delay)
+    
+    # Возвращаемся в начальную позу
+    Stay()
+
+if __name__ == "__main__":
+    try:
+        move_forward(step_count=10, step_delay=0.15)
+    except KeyboardInterrupt:
+        print("Остановка движения")
+        Stay()
+
+#-----------------------------------------------------------------------------------------------------------------------------
+def smooth_move(func, start_angle, end_angle, duration=0.3, steps=10):
+    step_delay = duration / steps
+    delta = (end_angle - start_angle) / steps
+    for i in range(steps):
+        func(start_angle + delta * i)
+        time.sleep(step_delay)
+    func(end_angle)
+
+def walk_forward(step_duration=0.3):
+    print("Начало шага")
+
+    # Шаг 1: Поднять и вынести вперед FL
+    smooth_move(Front_Left_humerus, 60, 30, duration=step_duration)
+    smooth_move(Front_Left_clauiculum, 90, 60, duration=step_duration)
+    smooth_move(Front_Left_humerus, 30, 60, duration=step_duration)
+
+    # Шаг 2: Перенос BR
+    smooth_move(Back_Right_humerus, 60, 30, duration=step_duration)
+    smooth_move(Back_Right_clauiculum, 90, 60, duration=step_duration)
+    smooth_move(Back_Right_humerus, 30, 60, duration=step_duration)
+
+    # Шаг 3: Перенос FR
+    smooth_move(Front_Right_humerus, 60, 30, duration=step_duration)
+    smooth_move(Front_Right_clauiculum, 90, 120, duration=step_duration)
+    smooth_move(Front_Right_humerus, 30, 60, duration=step_duration)
+
+    # Шаг 4: Перенос BL
+    smooth_move(Back_Left_humerus, 60, 30, duration=step_duration)
+    smooth_move(Back_Left_clauiculum, 90, 120, duration=step_duration)
+    smooth_move(Back_Left_humerus, 30, 60, duration=step_duration)
+
+    print("Шаг завершён")
