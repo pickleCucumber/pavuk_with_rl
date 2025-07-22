@@ -219,59 +219,59 @@ def move_forward(step_count=5, step_time=0.5, step_length=15, step_height=30):
     Stay()
     time.sleep(1)
     
-    # Константы для движения
+    # константы
     neutral_angle = 90
     half_step_time = step_time / 2
     
     for step in range(step_count):
         print(f"Шаг {step + 1}/{step_count}")
         
-        # Разбиваем шаг на 10 промежутков для плавности
+        # разбиваем шаг на 10 промежутков для плавности
         for i in range(10):
             t = i * 0.1 * step_time
             phase = (t % step_time) < half_step_time
             
-            # Нормализованное время для текущей фазы [0..1]
+            # нормализованное время для фазы
             t_norm = (t % half_step_time) / half_step_time
             
-            # Вычисляем высоту по параболе (плавный подъем/спуск)
+            # вычисляем высоту по параболе (плавный подъем/спуск)
             current_height = 4 * step_height * t_norm * (1 - t_norm)
             
-            # Фаза 1: FR и BL ноги двигаются
+            # фаза 1: FR и BL 
             if phase:
-                # Передняя правая нога (FR) - ИЗМЕНИЛИ ЗНАК НА МИНУС
+                # передняя правая нога (FR) - смена знака
                 clav_angle = neutral_angle - step_length * (2*t_norm - 1)  
                 hum_angle = 60 - current_height
                 Front_Right_clauiculum(clav_angle)
                 Front_Right_humerus(hum_angle)
                 
-                # Задняя левая нога (BL) - ИЗМЕНИЛИ ЗНАК НА МИНУС
+                # Задняя левая нога (BL) - смена знака
                 clav_angle = neutral_angle - step_length * (2*t_norm - 1) 
                 hum_angle = 60 - current_height
                 Back_Left_clauiculum(clav_angle)
                 Back_Left_humerus(hum_angle)
                 
-                # Остальные ноги в опорной позиции
+                # остальные в опорной 
                 Front_Left_clauiculum(neutral_angle)
                 Front_Left_humerus(60)
                 Back_Right_clauiculum(neutral_angle)
                 Back_Right_humerus(60)
             
-            # Фаза 2: FL и BR ноги двигаются
+            # фаза 2: FL и BR 
             else:
-                # Передняя левая нога (FL) - ИЗМЕНИЛИ ЗНАК НА МИНУС
+                # передняя левая нога (FL) -смена знака
                 clav_angle = neutral_angle - step_length * (2*t_norm - 1)  
                 hum_angle = 60 - current_height
                 Front_Left_clauiculum(clav_angle)
                 Front_Left_humerus(hum_angle)
                 
-                # Задняя правая нога (BR) - ИЗМЕНИЛИ ЗНАК НА МИНУС
+                # задняя правая нога (BR) - смена знака
                 clav_angle = neutral_angle - step_length * (2*t_norm - 1)  
                 hum_angle = 60 - current_height
                 Back_Right_clauiculum(clav_angle)
                 Back_Right_humerus(hum_angle)
                 
-                # Остальные ноги в опорной позиции
+                # остальные в опорной 
                 Front_Right_clauiculum(neutral_angle)
                 Front_Right_humerus(60)
                 Back_Left_clauiculum(neutral_angle)
