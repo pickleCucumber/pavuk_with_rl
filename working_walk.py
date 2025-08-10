@@ -3,7 +3,7 @@ import time
 import csv
 import math
 from adafruit_servokit import ServoKit
-import mpu6050
+#import mpu6050
 import numpy as np
 import smbus
 
@@ -135,7 +135,7 @@ def Stay():
 
 def lay():
     radii(0)
-    humerus(0)
+    humerus(10)
     collarbone(90)
 
 def sit():
@@ -282,12 +282,18 @@ def move_forward(step_count=5, step_time=0.5, step_length=15, step_height=30):
     Stay()
 
 
-sit
-time.sleep(2)
-Heil()
+#sit
+#time.sleep(2)
+#Heil()
 # lay_to_stay(duration=3.0)
-time.sleep(2)
+#time.sleep(2)
 # # 
-# Stay()
-# time.sleep(3)
-# move_forward(step_count=3, step_time=0.8, step_length=12, step_height=25)
+#Stay()
+time.sleep(2)
+lay()
+time.sleep(2)
+sit()
+time.sleep(3)
+Stay()
+time.sleep(2)
+move_forward(step_count=3, step_time=0.8, step_length=12, step_height=25)
