@@ -126,8 +126,10 @@ def Stay():
 
     time.sleep(1)
     collarbone(90)
+    time.sleep(0.5)
+
     radii(100)
-    time.sleep(1)
+    time.sleep(0.5)
     humerus(60)
     time.sleep(1)
     print("Инициализация закончена")
@@ -135,28 +137,34 @@ def Stay():
 
 def lay():
     radii(0)
+    time.sleep(0.5)
     humerus(10)
     collarbone(90)
 
 def sit():
     collarbone(90)
-
-    Front_Right_humerus(90)
-    Front_Left_humerus(90)
-    Back_Left_humerus(45)
-    Back_Right_humerus(45)
-    Front_Right_radii(100)
-    Front_Left_radii(100)
+    Front_Right_radii(120)
+    Front_Left_radii(120)
+    time.sleep(0.5)
     Back_Left_radii(45)
     Back_Right_radii(45)
-    
-def Heil():
-    sit()
-    
-    Back_Right_radii(60)
+    time.sleep(0.5)
+    Back_Left_humerus(45)
+    Back_Right_humerus(45)
+    time.sleep(0.5)
+    Front_Right_humerus(90)
+    Front_Left_humerus(90)
+    time.sleep(1)
 
-    Front_Left_radii(60)
+def Heil():
+    #sit()
+    
+    #Back_Right_radii(60)
+
+    #Front_Left_radii(60)
     Front_Left_clauiculum(130)
+    Front_Left_humerus(110)
+
     Front_Left_radii(160)
     time.sleep(0.2)
     i=0
@@ -289,11 +297,14 @@ def move_forward(step_count=5, step_time=0.5, step_length=15, step_height=30):
 #time.sleep(2)
 # # 
 #Stay()
-time.sleep(2)
-lay()
-time.sleep(2)
+#time.sleep(2)
+#lay()
+#time.sleep(3)
 sit()
-time.sleep(3)
-Stay()
 time.sleep(2)
-move_forward(step_count=3, step_time=0.8, step_length=12, step_height=25)
+#Heil()
+#sit()
+#time.sleep(2)
+Stay()
+#time.sleep(4)
+#move_forward(step_count=3, step_time=0.8, step_length=12, step_height=25)
