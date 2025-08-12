@@ -3,13 +3,12 @@ import time
 import csv
 import math
 from adafruit_servokit import ServoKit
-#import mpu6050
+from mpu6050 import mpu6050
 import numpy as np
-import smbus
-
+from smbus2 import SMBus
 
 #задаем адресс объектов
-# mpu6050 = mpu6050.mpu6050(0x68)
+mpu6050 = mpu6050(0x68)
 kit = ServoKit(channels=16)
 
 # объявляем сервомоторы
@@ -100,36 +99,42 @@ def Back_Right_radii(A):
 def collarbone(A):
     Front_Right_clauiculum(A)
     Front_Left_clauiculum(A)
-    time.sleep(1)
+    time.sleep(0.5)
     Back_Left_clauiculum(A)
     Back_Right_clauiculum(A)
+    time.sleep(1)
 
 def humerus(A):
     Front_Right_humerus(A)
     Front_Left_humerus(A)
-    time.sleep(1)
+    time.sleep(0.5)
     Back_Left_humerus(A)
     Back_Right_humerus(A)
+    time.sleep(1)
+
 
 def radii(A):
     Front_Right_radii(A)
     Front_Left_radii(A)
-    time.sleep(1)
+    time.sleep(0.5)
     Back_Left_radii(A)
     Back_Right_radii(A)
+    time.sleep(1)
+
 
 
 
 #инициализация сервомоторов для калибровки
 def Stay():
     print("Инициализация началась")    
+    #humerus(90)
 
-    time.sleep(1)
-    collarbone(90)
     time.sleep(0.5)
+    collarbone(90)
+    #time.sleep(0.5)
 
     radii(100)
-    time.sleep(0.5)
+    #time.sleep(0.5)
     humerus(60)
     time.sleep(1)
     print("Инициализация закончена")
@@ -139,6 +144,7 @@ def lay():
     radii(0)
     time.sleep(0.5)
     humerus(10)
+    time.sleep(0.5)
     collarbone(90)
 
 def sit():
@@ -156,6 +162,25 @@ def sit():
     Front_Left_humerus(90)
     time.sleep(1)
 
+def stay_test():
+    collarbone(90)
+    Front_Right_radii(120)
+    Front_Left_radii(120)
+    time.sleep(0.5)
+    Back_Left_humerus(90)
+    Back_Right_humerus(90)
+    time.sleep(0.5)
+
+    Back_Left_radii(140)
+    Back_Right_radii(140)
+    time.sleep(0.5)
+    Back_Left_humerus(60)
+    Back_Right_humerus(60)
+    time.sleep(0.5)
+    Front_Right_humerus(60)
+    Front_Left_humerus(60)
+    time.sleep(1)
+    Stay()
 def Heil():
     #sit()
     
@@ -289,6 +314,219 @@ def move_forward(step_count=5, step_time=0.5, step_length=15, step_height=30):
     
     Stay()
 
+#-----------------------------------------------------------------------------------
+def smooth_move(servo_func, target_angle, duration):
+    """
+    Плавное движение сервомотора от текущего угла до целевого.
+    :param servo_func: Функция для управления углом сервомотора.
+    :param target_angle: Целевой угол для сервомотора.
+    :param duration: Время для перехода (в секундах).
+    """
+    current_angle = servo_angles.get(servo_func.__name__.split('_')[0], 90)  # Начальный угол
+    steps = 20  # Количество шагов для плавного перехода
+    step_time = duration / steps  # Время для одного шага
+    angle_step = (target_angle - current_angle) / steps  # Шаг угла
+    
+    for i in range(steps):
+        new_angle = current_angle + angle_step * (i + 1)
+        servo_func(new_angle)
+        time.sleep(step_time)
+        
+def stay_silk():
+#    smooth_move(Front_Right_humerus, 120, 1.0)
+#    smooth_move(Front_Left_humerus, 120, 1.0)
+#    smooth_move(Front_Left_humerus, 120, 1.0)
+#    smooth_move(Front_Right_humerus 120, 1.0)    
+
+    smooth_move(Front_Right_clauiculum, 90, 0.5)
+    smooth_move(Front_Left_clauiculum, 90, 0.5)
+    smooth_move(Back_Left_clauiculum, 90, 0.5)
+    smooth_move(Back_Right_clauiculum, 90, 0.5)
+    
+    smooth_move(Front_Right_radii, 90, 1.5)
+    smooth_move(Front_Left_radii, 90, 1.5)
+    #smooth_move(Front_Right_humerus, 90, 1.0)
+    #smooth_move(Front_Left_humerus, 90, 1.0)
+    smooth_move(Back_Left_humerus, 90, 2)
+    smooth_move(Back_Right_humerus, 90, 2)
+    
+    #smooth_move(Front_Right_radii, 90, 1.0)
+    #smooth_move(Front_Left_radii, 90, 1.0)
+    smooth_move(Front_Right_humerus, 90, 1.5)
+    smooth_move(Front_Left_humerus, 90, 1.5)
+    smooth_move(Back_Left_radii, 90, 2)
+    smooth_move(Back_Right_radii, 90, 2)
+    Stay()
+
+def turn_left(angle=90, duration=1.0):
+
+    # Плавно двигаем каждую ногу
+    smooth_move(Front_Right_clauiculum, 90 - angle, duration)
+    smooth_move(Back_Left_clauiculum, 90 - angle, duration)
+    smooth_move(Front_Left_clauiculum, 90 + angle, duration)
+    smooth_move(Back_Right_clauiculum, 90 + angle, duration)
+    
+    smooth_move(Front_Right_humerus, 60 - angle, duration)
+    smooth_move(Back_Left_humerus, 60 - angle, duration)
+    smooth_move(Front_Left_humerus, 60 + angle, duration)
+    smooth_move(Back_Right_humerus, 60 + angle, duration)
+    
+    smooth_move(Front_Right_radii, 90 - angle, duration)
+    smooth_move(Back_Left_radii, 90 - angle, duration)
+    smooth_move(Front_Left_radii, 90 + angle, duration)
+    smooth_move(Back_Right_radii, 90 + angle, duration)
+
+def turn_right(angle=90, duration=1.0):
+
+    
+    # Плавно двигаем каждую ногу
+    smooth_move(Front_Right_clauiculum, 90 + angle, duration)
+    smooth_move(Back_Left_clauiculum, 90 + angle, duration)
+    smooth_move(Front_Left_clauiculum, 90 - angle, duration)
+    smooth_move(Back_Right_clauiculum, 90 - angle, duration)
+    
+    smooth_move(Front_Right_humerus, 60 + angle, duration)
+    smooth_move(Back_Left_humerus, 60 + angle, duration)
+    smooth_move(Front_Left_humerus, 60 - angle, duration)
+    smooth_move(Back_Right_humerus, 60 - angle, duration)
+    
+    smooth_move(Front_Right_radii, 90 + angle, duration)
+    smooth_move(Back_Left_radii, 90 + angle, duration)
+    smooth_move(Front_Left_radii, 90 - angle, duration)
+    smooth_move(Back_Right_radii, 90 - angle, duration)
+"""
+def turn_left(step_count=5, step_time=0.5, step_angle=15, step_height=30):
+    Stay()
+    time.sleep(1)
+    
+    # константы
+    neutral_angle = 90
+    half_step_time = step_time / 2
+    
+    for step in range(step_count):
+        print(f"Шаг {step + 1}/{step_count}")
+        
+        # разбиваем шаг на 10 промежутков для плавности
+        for i in range(10):
+            t = i * 0.1 * step_time
+            phase = (t % step_time) < half_step_time
+            
+            # нормализованное время для фазы
+            t_norm = (t % half_step_time) / half_step_time
+            
+            # вычисляем высоту по параболе (плавный подъем/спуск)
+            current_height = 4 * step_height * t_norm * (1 - t_norm)
+            
+            # фаза 1: FR и BL (поворот влево)
+            if phase:
+                # передняя правая нога (FR) - смена знака
+                clav_angle = neutral_angle - step_angle * (2 * t_norm - 1)  
+                hum_angle = 60 - current_height
+                Front_Right_clauiculum(clav_angle)
+                Front_Right_humerus(hum_angle)
+                
+                # Задняя левая нога (BL) - смена знака
+                clav_angle = neutral_angle - step_angle * (2 * t_norm - 1) 
+                hum_angle = 60 - current_height
+                Back_Left_clauiculum(clav_angle)
+                Back_Left_humerus(hum_angle)
+                
+                # остальные в опорной 
+                Front_Left_clauiculum(neutral_angle)
+                Front_Left_humerus(60)
+                Back_Right_clauiculum(neutral_angle)
+                Back_Right_humerus(60)
+            
+            # фаза 2: FL и BR
+            else:
+                # передняя левая нога (FL) - смена знака
+                clav_angle = neutral_angle - step_angle * (2 * t_norm - 1)  
+                hum_angle = 60 - current_height
+                Front_Left_clauiculum(clav_angle)
+                Front_Left_humerus(hum_angle)
+                
+                # задняя правая нога (BR) - смена знака
+                clav_angle = neutral_angle - step_angle * (2 * t_norm - 1)  
+                hum_angle = 60 - current_height
+                Back_Right_clauiculum(clav_angle)
+                Back_Right_humerus(hum_angle)
+                
+                # остальные в опорной 
+                Front_Right_clauiculum(neutral_angle)
+                Front_Right_humerus(60)
+                Back_Left_clauiculum(neutral_angle)
+                Back_Left_humerus(60)
+            
+            time.sleep(step_time / 10)
+    
+    Stay()
+
+def turn_right(step_count=5, step_time=0.5, step_angle=15, step_height=30):
+    Stay()
+    time.sleep(1)
+    
+    # константы
+    neutral_angle = 90
+    half_step_time = step_time / 2
+    
+    for step in range(step_count):
+        print(f"Шаг {step + 1}/{step_count}")
+        
+        # разбиваем шаг на 10 промежутков для плавности
+        for i in range(10):
+            t = i * 0.1 * step_time
+            phase = (t % step_time) < half_step_time
+            
+            # нормализованное время для фазы
+            t_norm = (t % half_step_time) / half_step_time
+            
+            # вычисляем высоту по параболе (плавный подъем/спуск)
+            current_height = 4 * step_height * t_norm * (1 - t_norm)
+            
+            # фаза 1: FR и BL (поворот вправо)
+            if phase:
+                # передняя левая нога (FL) - смена знака
+                clav_angle = neutral_angle + step_angle * (2 * t_norm - 1)  
+                hum_angle = 60 - current_height
+                Front_Left_clauiculum(clav_angle)
+                Front_Left_humerus(hum_angle)
+                
+                # Задняя правая нога (BR) - смена знака
+                clav_angle = neutral_angle + step_angle * (2 * t_norm - 1) 
+                hum_angle = 60 - current_height
+                Back_Right_clauiculum(clav_angle)
+                Back_Right_humerus(hum_angle)
+                
+                # остальные в опорной 
+                Front_Right_clauiculum(neutral_angle)
+                Front_Right_humerus(60)
+                Back_Left_clauiculum(neutral_angle)
+                Back_Left_humerus(60)
+            
+            # фаза 2: FL и BR
+            else:
+                # передняя правая нога (FR) - смена знака
+                clav_angle = neutral_angle + step_angle * (2 * t_norm - 1)  
+                hum_angle = 60 - current_height
+                Front_Right_clauiculum(clav_angle)
+                Front_Right_humerus(hum_angle)
+                
+                # задняя левая нога (BL) - смена знака
+                clav_angle = neutral_angle + step_angle * (2 * t_norm - 1)  
+                hum_angle = 60 - current_height
+                Back_Left_clauiculum(clav_angle)
+                Back_Left_humerus(hum_angle)
+                
+                # остальные в опорной 
+                Front_Left_clauiculum(neutral_angle)
+                Front_Left_humerus(60)
+                Back_Right_clauiculum(neutral_angle)
+                Back_Right_humerus(60)
+            
+            time.sleep(step_time / 10)
+    
+    Stay()
+"""
 
 #sit
 #time.sleep(2)
@@ -298,13 +536,22 @@ def move_forward(step_count=5, step_time=0.5, step_length=15, step_height=30):
 # # 
 #Stay()
 #time.sleep(2)
-#lay()
-#time.sleep(3)
+lay()
+log_data()
+time.sleep(3)
 sit()
+log_data()
 time.sleep(2)
+#Front_Right_radii(120)
+stay_test()
+log_data()
+#Stay()
+#stay_silk()
+#stay_silk()
+#turn_right()
 #Heil()
 #sit()
 #time.sleep(2)
-Stay()
+#Stay()
 #time.sleep(4)
 #move_forward(step_count=3, step_time=0.8, step_length=12, step_height=25)
