@@ -361,20 +361,24 @@ def stay_silk():
 def turn_left(angle=90, duration=1.0):
 
     # Плавно двигаем каждую ногу
-    smooth_move(Front_Right_clauiculum, 90 - angle, duration)
-    smooth_move(Back_Left_clauiculum, 90 - angle, duration)
-    smooth_move(Front_Left_clauiculum, 90 + angle, duration)
-    smooth_move(Back_Right_clauiculum, 90 + angle, duration)
+    smooth_move(Front_Right_clauiculum, 120, duration)
+    smooth_move(Front_Right_humerus, 90, duration)
+    smooth_move(Front_Right_radii, 120, duration)
+
+    smooth_move(Back_Left_clauiculum, 45, duration)
+    smooth_move(Back_Left_humerus, 60, duration)
+    smooth_move(Back_Left_radii, 90, duration)
+   # smooth_move(Back_Right_clauiculum, 90 + angle, duration)
     
-    smooth_move(Front_Right_humerus, 60 - angle, duration)
-    smooth_move(Back_Left_humerus, 60 - angle, duration)
-    smooth_move(Front_Left_humerus, 60 + angle, duration)
-    smooth_move(Back_Right_humerus, 60 + angle, duration)
+    # smooth_move(Front_Right_humerus, 60 - angle, duration)
+    # smooth_move(Back_Left_humerus, 60 - angle, duration)
+    # smooth_move(Front_Left_humerus, 60 + angle, duration)
+    # smooth_move(Back_Right_humerus, 60 + angle, duration)
     
-    smooth_move(Front_Right_radii, 90 - angle, duration)
-    smooth_move(Back_Left_radii, 90 - angle, duration)
-    smooth_move(Front_Left_radii, 90 + angle, duration)
-    smooth_move(Back_Right_radii, 90 + angle, duration)
+    # smooth_move(Front_Right_radii, 90 - angle, duration)
+    # smooth_move(Back_Left_radii, 90 - angle, duration)
+    # smooth_move(Front_Left_radii, 90 + angle, duration)
+    # smooth_move(Back_Right_radii, 90 + angle, duration)
 
 def turn_right(angle=90, duration=1.0):
 
